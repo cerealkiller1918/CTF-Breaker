@@ -6,6 +6,9 @@ from datetime import datetime
 import requests
 import io 
 import os 
+from http.server import *
+import time
+from socketserver import *
 
 def port_scanner(ip_address): 
     target = gethostbyname(ip_address)
@@ -45,7 +48,7 @@ def port_scanner(ip_address):
         print("\n Hostname Could Not Be Resolved !!!!")
         sys.exit()
     except socket.error:
-        print("\ Server not responding !!!!")
+        print("\n Server not responding !!!!")
         sys.exit()
 
 def nmap(ports,target):
@@ -60,6 +63,18 @@ def nmap(ports,target):
             scanPorts += (str(port))
     #print(scanPorts)
     os.system(("nmap -p "+ scanPorts +" -sC -sV "+ target +" -oN nmap-scan"))
+
+def webHosting(port):
+    # TODO tring to rethink about how I am doing this
+   # http.server(port)
+   # print("Working on it")
+   # os.system(("python -m http.server " + port))
+    
+    Handler = SimpleHTTPRequestHandler
+    http = TCPServer(("",int(port)),Handler)
+    print("serving at port",port)
+    http.serve_forever()
+
 
 def printTitle():
     print("""
@@ -76,7 +91,10 @@ def printTitle():
 
 def main_menu():
     while True:
-        print("1: Port Scanner \n")
+        print("""
+ 1: Port Scanner    2:Web Hosting\n 
+ exit: Exit
+ """)
         pick = input("Enter Choice: ")
         choices(pick)
 
@@ -84,6 +102,13 @@ def choices(pick):
     match pick:
         case "1":
             port_scanner(input("Enter IP Address: "))
+        case "2":
+            webHosting(input("Enter a port:"))
+        case "exit":
+            print("Good Bye.")
+            time.sleep(2)
+            os.system("clear")
+            exit()
         case _:
             print("Not a choice. ") 
 

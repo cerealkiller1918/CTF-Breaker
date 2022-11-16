@@ -90,7 +90,7 @@ def choices(pick):
 def main():
 
     printTitle()
-
+    main_menu()
 
 if __name__ == '__main__':
     main()

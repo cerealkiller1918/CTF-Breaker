@@ -74,15 +74,23 @@ def printTitle():
 
     """)
 
+def main_menu():
+    while True:
+        print("1: Port Scanner \n")
+        pick = input("Enter Choice: ")
+        choices(pick)
+
+def choices(pick):
+    match pick:
+        case "1":
+            port_scanner(input("Enter IP Address: "))
+        case _:
+            print("Not a choice. ") 
+
 def main():
 
     printTitle()
 
-    if len(sys.argv)==2:
-        port_scanner(sys.argv[1])
-    else:
-        i = input("Enter IP address: ")
-        port_scanner(i)
 
 if __name__ == '__main__':
     main()

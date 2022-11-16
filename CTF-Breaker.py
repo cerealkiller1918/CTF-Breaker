@@ -15,9 +15,7 @@ def port_scanner(ip_address):
     print("Scanning Target:",target)
     print("Scanning started at:",str(start_time))
     print("-"*50)
-
     try:
-        # TODO Make a list to pass to Nmap 
         ports = []
         # Scans for open ports
         for port in range(1,65535):

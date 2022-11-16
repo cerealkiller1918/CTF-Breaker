@@ -29,6 +29,8 @@ def port_scanner(ip_address):
                 ports.append(port)
             s.close()
 
+        nmap(ports,target)
+        
         ended_time = datetime.now()
         # Ending Banner
         print("-"*50)
@@ -37,7 +39,6 @@ def port_scanner(ip_address):
         print("The Scan took", str(ended_time-start_time),"to run")
         print("-"*50)
 
-        nmap(ports,target)
 
     except KeyboardInterrupt:
         print("\n Exiting Program !!!!!\n")
@@ -60,6 +61,14 @@ def nmap(ports,target):
         else:
             scanPorts += (str(port))
     #print(scanPorts)
-    
     os.system(("nmap -p "+ scanPorts +" -sC -sV "+ target +" -oN nmap-scan"))
 
+def main():
+    if len(sys.argv)==2:
+        port_scanner(sys.argv[1])
+    else:
+        i = input("Enter IP address: ")
+        port_scanner(i)
+
+if __name__ == '__main__':
+    main()

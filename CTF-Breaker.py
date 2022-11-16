@@ -66,14 +66,15 @@ def nmap(ports,target):
 
 def webHosting(port):
     # TODO tring to rethink about how I am doing this
-   # http.server(port)
-   # print("Working on it")
-   # os.system(("python -m http.server " + port))
+#    http.server(port)
+    print("Working on it")
+    print(os.environ.get('DESKTOP_SESSION'))
+#    os.system(("python -m http.server " + port))
     
-    Handler = SimpleHTTPRequestHandler
-    http = TCPServer(("",int(port)),Handler)
-    print("serving at port",port)
-    http.serve_forever()
+#    Handler = SimpleHTTPRequestHandler
+#    http = TCPServer(("",int(port)),Handler)
+#    print("serving at port",port)
+#    http.serve_forever()
 
 
 def printTitle():

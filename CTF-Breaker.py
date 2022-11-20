@@ -68,8 +68,8 @@ def nmap(ports,target):
 def dirb(urls):
     arr=[]
     url=urls
-    wordlist = os.getcwd() + "directory-list-lowercase-2.3-medium.txt"
-    
+    wordlist = os.getcwd() + "/directory-list-lowercase-2.3-medium.txt"
+    sublist = ["",".txt",".php",".html"]
     try:
         if url[:7] != 'http://':
             url="http://"+url
@@ -82,14 +82,15 @@ def dirb(urls):
         if os.path.exists(wordlist):
            with open(wordlist, "r") as wlist:
                 for i in wlist:
-                    print(url+"/"+i)
-                    rq=requests.get(url+"/"+i)
-                    if rq.status_code == 200:
-                        print(">OK".rjust(len(url+"/"+i)+5,'-'))
-                        arr.append(str(url+"/"+i))
-                    else:
-                        print(">404".rjust(len(url+"/"+i)+5,'-'))
-                
+                    for sub in sublist:
+                        print(url+"/"+i+sub)
+                        rq=requests.get(url+"/"+i+sub)
+                        if rq.status_code == 200:
+                            print(">OK".rjust(len(url+"/"+i+sub)+5,'-'))
+                            arr.append(str(url+"/"+i+sub))
+                        else:
+                            print(">404".rjust(len(url+"/"+i+sub)+5,'-'))
+                    
                 print("output".center(100,'-'))
                 l=1
                 for i in arr:

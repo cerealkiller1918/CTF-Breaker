@@ -9,7 +9,7 @@ import os
 from http.server import *
 import time
 from socketserver import *
-import base64
+from base64 import *
 
 
 def port_scanner(ip_address):
@@ -119,16 +119,35 @@ def webHosting(port):
 #    print("serving at port",port)
 #    http.serve_forever()
 
+def printOutputBytes(message:bytes):
+    print(f"Output: {message.decode('utf-8')}")
+
+
 def decodeBase64(code):
-    decode = base64.b64decode(code)
-    print(f"Output: {decode.decode('utf-8')}")
+    decoded = b64decode(code)
+    print(f"Output: {decoded.decode('utf-8')}")
 
 
-def encodeBase64(encode):
-    coded = base64.b64encode(bytes(encode, "utf-8"))
+def encodeBase64(encodeMessage):
+    coded = b64encode(bytes(encodeMessage, "utf-8"))
     print(f"Output: {coded.decode('utf-8')}")
     # checking
     # decodeBase64(coded)
+
+
+def decodeBase16(code):
+    decoded = b16decode(code)
+    printOutputBytes(decoded)
+
+
+def encodeBase16(encodeMessage):
+    coded = b16encode(encodeMessage)
+    printOutputBytes(coded)
+
+
+def decodeBase32(code):
+    encoded = b16decode(code)
+    printOutputBytes(encoded)
 
 
 def printTitle():

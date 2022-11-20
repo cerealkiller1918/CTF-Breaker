@@ -77,22 +77,22 @@ def dirb(urls,wordlist):
         else:
             print('Host is down.')
             return
-        if os.path.exists(os.getcwd()+wordlist):
-            fs=open(os.getcwd()+wordlist,"r")
-            for i in fs:
-                print(url+"/"+i)
-                rq=requests.get(url+"/"+i)
-                if rq.status_code == 200:
-                    print(">OK".rjust(len(url+"/"+i)+5,'-'))
-                    arr.append(str(url+"/"+i))
-                else:
-                    print(">404".rjust(len(url+"/"+i)+5,'-'))
-            fs.close()
-            print("output".center(100,'-'))
-            l=1
-            for i in arr:
-                print(l, "> ", i)
-                l+=1
+        if os.path.exists(wordlist):
+           with open(wordlist, "r") as wlist:
+                for i in wlist:
+                    print(url+"/"+i)
+                    rq=requests.get(url+"/"+i)
+                    if rq.status_code == 200:
+                        print(">OK".rjust(len(url+"/"+i)+5,'-'))
+                        arr.append(str(url+"/"+i))
+                    else:
+                        print(">404".rjust(len(url+"/"+i)+5,'-'))
+                
+                print("output".center(100,'-'))
+                l=1
+                for i in arr:
+                    print(l, "> ", i)
+                    l+=1
         else:
             print(wordlist+" don't exists in the directory.")
     except Exception as e:

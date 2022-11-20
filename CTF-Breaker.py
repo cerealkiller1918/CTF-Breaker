@@ -121,8 +121,14 @@ def webHosting(port):
 
 def decodeBase64(code):
     decode = base64.b64decode(code)
-    print(decode)
+    print(f"Output: {decode.decode('utf-8')}")
 
+
+def encodeBase64(encode):
+    coded = base64.b64encode(bytes(encode, "utf-8"))
+    print(f"Output: {coded.decode('utf-8')}")
+    # checking
+    #decodeBase64(coded)
 
 def printTitle():
     print("""
@@ -144,6 +150,8 @@ def main_menu():
  1: Port Scanner    
  2: Web Hosting
  3: Dir buster
+ 4: Decoding Base64
+ 5: Encoding Base64 
  exit: Exit
  """)
         pick = input("> ")
@@ -159,6 +167,10 @@ def choices(pick):
         case "3":
             url = input("Enter the url:")
             dirb(url)
+        case "4":
+            decodeBase64(input("Enter Base64: "))
+        case "5":
+            encodeBase64(input("Enter to be encoded: "))
         case "exit":
             print("Good Bye.")
             time.sleep(2)

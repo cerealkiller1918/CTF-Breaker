@@ -9,6 +9,7 @@ import os
 from http.server import *
 import time
 from socketserver import *
+import base64 
 
 def port_scanner(ip_address): 
     target = gethostbyname(ip_address)
@@ -64,6 +65,39 @@ def nmap(ports,target):
     #print(scanPorts)
     os.system(("nmap -p "+ scanPorts +" -sC -sV "+ target +" -oN nmap-scan"))
 
+def dirb(urls,wordlist):
+    arr=[]
+    url=urls
+    try:
+        if url[:7] != 'http://':
+            url="http://"+url
+        r=requests.get(url)
+        if r.status_code == 200:
+            print('Host is up.')
+        else:
+            print('Host is down.')
+            return
+        if os.path.exists(os.getcwd()+wordlist):
+            fs=open(os.getcwd()+wordlist,"r")
+            for i in fs:
+                print(url+"/"+i)
+                rq=requests.get(url+"/"+i)
+                if rq.status_code == 200:
+                    print(">OK".rjust(len(url+"/"+i)+5,'-'))
+                    arr.append(str(url+"/"+i))
+                else:
+                    print(">404".rjust(len(url+"/"+i)+5,'-'))
+            fs.close()
+            print("output".center(100,'-'))
+            l=1
+            for i in arr:
+                print(l, "> ", i)
+                l+=1
+        else:
+            print(wordlist+" don't exists in the directory.")
+    except Exception as e:
+        print(e)
+
 def webHosting(port):
     # TODO tring to rethink about how I am doing this
 #    http.server(port)
@@ -76,6 +110,9 @@ def webHosting(port):
 #    print("serving at port",port)
 #    http.serve_forever()
 
+def decodeBase64(code):
+    decode = base64.b64decode(code)
+    print(decode)
 
 def printTitle():
     print("""
@@ -93,10 +130,12 @@ def printTitle():
 def main_menu():
     while True:
         print("""
- 1: Port Scanner    2:Web Hosting\n 
+ 1: Port Scanner    
+ 2: Web Hosting
+ 3: Dirbuster
  exit: Exit
  """)
-        pick = input("Enter Choice: ")
+        pick = input("> ")
         choices(pick)
 
 def choices(pick):
@@ -105,6 +144,10 @@ def choices(pick):
             port_scanner(input("Enter IP Address: "))
         case "2":
             webHosting(input("Enter a port:"))
+        case "3":
+            url = input("Enter the url:")
+            wordlist = input ("Enter work list: ")
+            dirb(url,wordlist)
         case "exit":
             print("Good Bye.")
             time.sleep(2)

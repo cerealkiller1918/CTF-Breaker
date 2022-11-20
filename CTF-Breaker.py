@@ -65,9 +65,11 @@ def nmap(ports,target):
     #print(scanPorts)
     os.system(("nmap -p "+ scanPorts +" -sC -sV "+ target +" -oN nmap-scan"))
 
-def dirb(urls,wordlist):
+def dirb(urls):
     arr=[]
     url=urls
+    wordlist = os.getcwd() + "directory-list-lowercase-2.3-medium.txt"
+    
     try:
         if url[:7] != 'http://':
             url="http://"+url
@@ -146,8 +148,7 @@ def choices(pick):
             webHosting(input("Enter a port:"))
         case "3":
             url = input("Enter the url:")
-            wordlist = input ("Enter work list: ")
-            dirb(url,wordlist)
+            dirb(url)
         case "exit":
             print("Good Bye.")
             time.sleep(2)

@@ -138,18 +138,19 @@ def encodeBase64(encodeMessage):
 
 
 def decodeBase16(code):
-    decoded = b16decode(code)
-    printOutputBytes(decoded)
+    printOutputBytes(b16decode(code))
 
 
 def encodeBase16(encodeMessage):
-    coded = b16encode(encodeMessage)
-    printOutputBytes(coded)
+    printOutputBytes(b16encode(encodeMessage))
 
 
 def decodeBase32(code):
-    encoded = b16decode(code)
-    printOutputBytes(encoded)
+    printOutputBytes(b16encode(code))
+
+
+def encodeBase32(EncodeMessage):
+    printOutputBytes(b32encode(EncodeMessage))
 
 
 def printTitle():
@@ -167,32 +168,61 @@ def printTitle():
 
 
 # TODO add a menu for encode and decode
+
+def encodeMenu():
+    while True:
+        print("""
+1: Base64
+2: Base32
+3: Base16
+back: Back
+exit: Exit
+        """)
+
+        match input(">"):
+            case "1":
+                encodeBase64(input("Enter to encode Base64: "))
+            case "2":
+                encodeBase32(input("Enter to encode Base32: "))
+            case "3":
+                encodeBase16(input("Enter to encode Base16: "))
+            case "back":
+                main_menu()
+                break
+            case "exit":
+                exit()
+                break
+            case _:
+                print("Not a choice.")
+
+
+
 def decodeMenu():
     while True:
         print("""
-    1: Base64
-    2: Base32
-    3: Base16
-    back: back
-    exit: exit
+1: Base64
+2: Base32
+3: Base16
+back: back
+exit: exit
         """)
-        decodeChose(input(">"))
+        match input(">"):
+            case "1":
+                decodeBase64(input("Enter Base64: "))
+            case "2":
+                decodeBase32("Enter Base32: ")
+            case "3":
+                decodeBase16(input("Enter Base16: "))
+            case "back":
+                main_menu()
+                break
+            case "exit":
+                exit()
+                break
+            case _:
+                print("Not a choice.")
 
 
-def decodeChose(chose):
-    match chose:
-        case "1":
-            decodeBase64(input("Enter Base64: "))
-        case "2":
-            decodeBase32("Enter Base32: ")
-        case "3":
-            decodeBase16(input("Enter Base16: "))
-        case "back":
-            main_menu()
-        case "exit":
-            exit()
-        case _:
-            print("Not a chose.")
 
 
 def main_menu():
@@ -202,33 +232,27 @@ def main_menu():
  2: Web Hosting
  3: Dir buster
  4: Decoding
- 5: Encoding Base64 
+ 5: Encoding
  exit: Exit
  """)
-        pick = input("> ")
-        choices(pick)
-
-
-def choices(pick):
-    match pick:
-        case "1":
-            port_scanner(input("Enter IP Address: "))
-        case "2":
-            webHosting(input("Enter a port:"))
-        case "3":
-            url = input("Enter the url:")
-            dirb(url)
-        case "4":
-            decodeMenu()
-        case "5":
-            encodeBase64(input("Enter to be encoded: "))
-        case "exit":
-            print("Good Bye.")
-            time.sleep(2)
-            os.system("clear")
-            exit(1)
-        case _:
-            print("Not a choice. ")
+        match input(">"):
+            case "1":
+                port_scanner(input("Enter IP Address: "))
+            case "2":
+                webHosting(input("Enter a port:"))
+            case "3":
+                url = input("Enter the url:")
+                dirb(url)
+            case "4":
+                decodeMenu()
+                break
+            case "5":
+                encodeMenu()
+                break
+            case "exit":
+                exit()
+            case _:
+                print("Not a choice. ")
 
 
 def main():

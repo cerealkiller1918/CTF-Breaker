@@ -128,7 +128,8 @@ def encodeBase64(encode):
     coded = base64.b64encode(bytes(encode, "utf-8"))
     print(f"Output: {coded.decode('utf-8')}")
     # checking
-    #decodeBase64(coded)
+    # decodeBase64(coded)
+
 
 def printTitle():
     print("""

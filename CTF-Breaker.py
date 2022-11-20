@@ -125,14 +125,12 @@ def printOutputBytes(message:bytes):
 
 def decodeBase64(code):
     decoded = b64decode(code)
-    print(f"Output: {decoded.decode('utf-8')}")
+    printOutputBytes(decoded)
 
 
 def encodeBase64(encodeMessage):
     coded = b64encode(bytes(encodeMessage, "utf-8"))
-    print(f"Output: {coded.decode('utf-8')}")
-    # checking
-    # decodeBase64(coded)
+    printOutputBytes(coded)
 
 
 def decodeBase16(code):

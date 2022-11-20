@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+import binascii
 import sys
 from socket import *
 from datetime import datetime
@@ -121,8 +121,15 @@ def printOutputBytes(message: bytes):
 
 
 def decodeBase64(code):
-    decoded = b64decode(code)
-    printOutputBytes(decoded)
+    try:
+        decoded = b64decode(code)
+        printOutputBytes(decoded)
+    except UnicodeDecodeError:
+        print("Not Base64.")
+        return
+    except binascii.Error:
+        print("Not Base64.")
+        return
 
 
 def encodeBase64(encodeMessage):
@@ -160,6 +167,32 @@ def printTitle():
 
 
 # TODO add a menu for encode and decode
+def decodeMenu():
+    while True:
+        print("""
+    1: Base64
+    2: Base32
+    3: Base16
+    back: back
+    exit: exit
+        """)
+        decodeChose(input(">"))
+
+
+def decodeChose(chose):
+    match chose:
+        case "1":
+            decodeBase64(input("Enter Base64: "))
+        case "2":
+            decodeBase32("Enter Base32: ")
+        case "3":
+            decodeBase16(input("Enter Base16: "))
+        case "back":
+            main_menu()
+        case "exit":
+            exit()
+        case _:
+            print("Not a chose.")
 
 
 def main_menu():
@@ -168,7 +201,7 @@ def main_menu():
  1: Port Scanner    
  2: Web Hosting
  3: Dir buster
- 4: Decoding Base64
+ 4: Decoding
  5: Encoding Base64 
  exit: Exit
  """)
@@ -186,14 +219,14 @@ def choices(pick):
             url = input("Enter the url:")
             dirb(url)
         case "4":
-            decodeBase64(input("Enter Base64: "))
+            decodeMenu()
         case "5":
             encodeBase64(input("Enter to be encoded: "))
         case "exit":
             print("Good Bye.")
             time.sleep(2)
             os.system("clear")
-            exit()
+            exit(1)
         case _:
             print("Not a choice. ")
 

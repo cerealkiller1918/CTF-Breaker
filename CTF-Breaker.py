@@ -4,11 +4,8 @@ import sys
 from socket import *
 from datetime import datetime
 import requests
-import io
 import os
-from http.server import *
 import time
-from socketserver import *
 from base64 import *
 
 
@@ -46,10 +43,10 @@ def port_scanner(ip_address):
     except KeyboardInterrupt:
         print("\n Exiting Program !!!!!\n")
         sys.exit()
-    except socket.gaierror:
+    except gaierror:
         print("\n Hostname Could Not Be Resolved !!!!")
         sys.exit()
-    except socket.error:
+    except error:
         print("\n Server not responding !!!!")
         sys.exit()
 
@@ -65,17 +62,17 @@ def nmap(ports, target):
         else:
             scanPorts += (str(port))
     # print(scanPorts)
-    os.system(("nmap -p " + scanPorts + " -sC -sV " + target + " -oN nmap-scan"))
+    os.system(f"nmap -p {scanPorts} -sC -sV  {target} -oN nmap-scan")
 
 
 def dirb(urls):
     arr = []
     url = urls
-    wordlist = os.getcwd() + "/directory-list-lowercase-2.3-medium.txt"
+    wordlist = f"{os.getcwd()} /directory-list-lowercase-2.3-medium.txt"
     sublist = ["", ".txt", ".php", ".html"]
     try:
         if url[:7] != 'http://':
-            url = "http://" + url
+            url = f"http://{url}"
         r = requests.get(url)
         if r.status_code == 200:
             print('Host is up.')
@@ -95,12 +92,12 @@ def dirb(urls):
                             print(">404".rjust(len(url + "/" + i + sub) + 5, '-'))
 
                 print("output".center(100, '-'))
-                l = 1
+                num = 1
                 for i in arr:
-                    print(l, "> ", i)
-                    l += 1
+                    print(num, "> ", i)
+                    num += 1
         else:
-            print(wordlist + " don't exists in the directory.")
+            print(f"{wordlist} don't exists in the directory.")
     except Exception as e:
         print(e)
 
@@ -119,7 +116,7 @@ def webHosting(port):
 #    print("serving at port",port)
 #    http.serve_forever()
 
-def printOutputBytes(message:bytes):
+def printOutputBytes(message: bytes):
     print(f"Output: {message.decode('utf-8')}")
 
 
@@ -160,6 +157,9 @@ def printTitle():
                                                                                      
 
     """)
+
+
+# TODO add a menu for encode and decode
 
 
 def main_menu():

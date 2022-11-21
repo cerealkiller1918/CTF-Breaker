@@ -102,7 +102,7 @@ def dirb(urls):
         print(e)
 
 
-def webHosting(port):
+def webHosting():
     # TODO trying to rethink about how I am doing this
     print("Working on it")
     print(os.environ.get('DESKTOP_SESSION'))
@@ -264,7 +264,7 @@ def main_menu():
             case "1":
                 port_scanner(input("Enter IP Address: "))
             case "2":
-                webHosting(input("Enter a port:"))
+                webHosting()
             case "3":
                 url = input("Enter the url:")
                 dirb(url)

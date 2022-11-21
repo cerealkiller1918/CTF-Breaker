@@ -103,17 +103,9 @@ def dirb(urls):
 
 def webHosting(port):
     # TODO trying to rethink about how I am doing this
-    #    http.server(port)
     print("Working on it")
     print(os.environ.get('DESKTOP_SESSION'))
 
-
-#    os.system(("python -m http.server " + port))
-
-#    Handler = SimpleHTTPRequestHandler
-#    http = TCPServer(("",int(port)),Handler)
-#    print("serving at port",port)
-#    http.serve_forever()
 
 def printOutputBytes(message: bytes):
     print(f"Output: {message.decode('utf-8')}")
@@ -201,7 +193,7 @@ def printTitle():
     """)
 
 
-# TODO add a menu for encode and decode
+
 
 def encodeMenu():
     while True:

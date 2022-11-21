@@ -5,7 +5,6 @@ from socket import *
 from datetime import datetime
 import requests
 import os
-import time
 from base64 import *
 
 
@@ -133,24 +132,59 @@ def decodeBase64(code):
 
 
 def encodeBase64(encodeMessage):
-    coded = b64encode(bytes(encodeMessage, "utf-8"))
-    printOutputBytes(coded)
+    try:
+        printOutputBytes(b64encode(encodeMessage))
+    except:
+        print("Not Base64.")
+        return
 
 
 def decodeBase16(code):
-    printOutputBytes(b16decode(code))
+    try:
+        printOutputBytes(b16decode(code))
+    except:
+        print("Not Base16.")
+        return
 
 
 def encodeBase16(encodeMessage):
-    printOutputBytes(b16encode(encodeMessage))
+    try:
+        printOutputBytes(b16encode(encodeMessage))
+    except:
+        print("Not Base16.")
+        return
 
 
 def decodeBase32(code):
-    printOutputBytes(b16encode(code))
+    try:
+        printOutputBytes(b16encode(code))
+    except:
+        print("Not Base32.")
+        return
 
 
 def encodeBase32(EncodeMessage):
-    printOutputBytes(b32encode(EncodeMessage))
+    try:
+        printOutputBytes(b32encode(EncodeMessage))
+    except:
+        print("Not Base32.")
+        return
+
+
+def autoDecode(encodeMessage):
+    try:
+        printOutputBytes(b64decode(encodeMessage))
+        print("Base64")
+    except:
+        try:
+            printOutputBytes(b32decode(encodeMessage))
+            print("Base32")
+        except:
+            try:
+                printOutputBytes(b16decode(encodeMessage))
+                print("Base16")
+            except:
+                print("Not able to decode")
 
 
 def printTitle():
@@ -196,7 +230,6 @@ exit: Exit
                 print("Not a choice.")
 
 
-
 def decodeMenu():
     while True:
         print("""
@@ -223,8 +256,6 @@ exit: exit
                 print("Not a choice.")
 
 
-
-
 def main_menu():
     while True:
         print("""
@@ -233,6 +264,7 @@ def main_menu():
  3: Dir buster
  4: Decoding
  5: Encoding
+ 6: Auto Decode
  exit: Exit
  """)
         match input(">"):
@@ -249,6 +281,8 @@ def main_menu():
             case "5":
                 encodeMenu()
                 break
+            case "6":
+                autoDecode(input("Enter to decode: "))
             case "exit":
                 exit()
             case _:
